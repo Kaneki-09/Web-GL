@@ -50,9 +50,10 @@
         const group = new THREE.Group();
         scene.add(group);
 
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
-        const box = new THREE.Mesh(geometry, material);
+        const box = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true })
+        );
         group.add(box);
 
         const guiPosition = gui.addFolder("Position");
@@ -61,8 +62,8 @@
         guiPosition.add(box.position, "z", -2, 2, 0.4).name("positionZ");
 
         const guiMaterial = gui.addFolder("Material");
-        guiMaterial.add(material, 'wireframe');
-        guiMaterial.addColor(material, 'color');
+        guiMaterial.add(box.material, 'wireframe');
+        guiMaterial.addColor(box.material, 'color');
 
         // box.position.x = -0.7;
         // box.position.y = 0.6;
