@@ -52,6 +52,8 @@
         const box = new THREE.Mesh(geometry, material);
         scene.add(box);
 
+        gui.add(box.position, 'x', -3, 3, 0.1);
+
         // box.position.x = -0.7;
         // box.position.y = 0.6;
         // box.position.z = -1;
