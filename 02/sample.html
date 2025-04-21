@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オブジェジェクトの変換</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="importmap">
+{
+    "imports":{
+"three":"https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js",
+"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/",
+"stats": "https://cdn.skypack.dev/stats.js.fps",
+"lil-gui":"https://cdn.jsdelivr.net/npm/lil-gui@0.20/+esm"
+    }
+}
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import Stats from 'stats';
+        import GUI from 'lil-gui';
+
+        const scene = new THREE.Scene();
+
+        const axesHelper = new THREE.AxesHelper(3);
+        scene.add(axesHelper);
+
+        //Stats
+        const stats = new Stats();
+        stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+        document.body.appendChild(stats.dom);
+
+        //GUI
+        const gui = new GUI();
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+        camera.position.z = 3;
+        scene.add(camera);
+
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+        const box = new THREE.Mesh(geometry, material);
+        scene.add(box);
+
+        // box.position.x = -0.7;
+        // box.position.y = 0.6;
+        // box.position.z = -1;
+        //box.position.set=(-0.7,1.-1);
+
+        // box.scale.x = 2;
+        // box.scale.y = 1.5;
+        // box.scale.z = 2;
+
+        // box.rotation.x = (Math.PI / 180) * 60;
+        // box.rotation.y = (Math.PI / 180) * 20;
+        // box.rotation.z = (Math.PI / 180) * 50;
+
+        // console.log(box.position.length());
+        // console.log(box.position.distanceTo(camera.position));
+        // console.log(box.position.distanceTo(new THREE.Vector3(0, 0, 0)));
+        // console.log(box.position.normalize());
+
+        //レンダラー
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        renderer.render(scene, camera);
+
+
+        const update = () => {
+            stats.begin();
+            renderer.render(scene, camera);
+            stats.end();
+
+            window.requestAnimationFrame(update);
+        }
+
+        update();
+    </script>
+</body>
+
+</html>
