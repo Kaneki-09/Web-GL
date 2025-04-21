@@ -48,7 +48,7 @@
         scene.add(camera);
 
         const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
         const box = new THREE.Mesh(geometry, material);
         scene.add(box);
 
@@ -56,6 +56,8 @@
         guiPosition.add(box.position, 'x', -3, 3, 0.1).name("positionX");
         guiPosition.add(box.position, "y", -4, 4, 0.2).name("positionY");
         guiPosition.add(box.position, "z", -2, 2, 0.4).name("positionZ");
+
+        gui.add(material, 'wireframe');
 
         // box.position.x = -0.7;
         // box.position.y = 0.6;
