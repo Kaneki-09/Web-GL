@@ -52,13 +52,13 @@
 
         const box = new THREE.Mesh(
             new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true })
+            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: false })
         );
         group.add(box);
 
         const box2 = new THREE.Mesh(
             new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true })
+            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: false })
         );
         group.add(box2);
         box.position.y = -1;
