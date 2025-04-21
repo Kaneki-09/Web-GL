@@ -56,10 +56,19 @@
         );
         group.add(box);
 
+        const box2 = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true })
+        );
+        group.add(box2);
+        box.position.y = -1;
+
+        group.position.x = 1;
+
         const guiPosition = gui.addFolder("Position");
-        guiPosition.add(box.position, 'x', -3, 3, 0.1).name("positionX");
-        guiPosition.add(box.position, "y", -4, 4, 0.2).name("positionY");
-        guiPosition.add(box.position, "z", -2, 2, 0.4).name("positionZ");
+        guiPosition.add(group.position, 'x', -3, 3, 0.1).name("positionX");
+        guiPosition.add(group.position, "y", -4, 4, 0.2).name("positionY");
+        guiPosition.add(group.position, "z", -2, 2, 0.4).name("positionZ");
 
         const guiMaterial = gui.addFolder("Material");
         guiMaterial.add(box.material, 'wireframe');
