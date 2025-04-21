@@ -47,10 +47,13 @@
         camera.position.z = 3;
         scene.add(camera);
 
+        const group = new THREE.Group();
+        scene.add(group);
+
         const geometry = new THREE.BoxGeometry(1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
         const box = new THREE.Mesh(geometry, material);
-        scene.add(box);
+        group.add(box);
 
         const guiPosition = gui.addFolder("Position");
         guiPosition.add(box.position, 'x', -3, 3, 0.1).name("positionX");
