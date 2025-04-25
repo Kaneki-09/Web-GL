@@ -112,6 +112,9 @@
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
 
+        //マウスコントロール
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
 
         const update = () => {
             stats.begin();
