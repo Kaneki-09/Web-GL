@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パーティクル</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <script type="importmap">
+        {
+            "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/",
+            "stats": "https://cdn.skypack.dev/stats.js.fps",
+            "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.20/+esm"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import Stats from 'stats';
+        import GUI from 'lil-gui';
+
+        //シーン
+        const scene = new THREE.Scene();
+
+        //カメラ
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+        camera.position.z = 5;
+        scene.add(camera);
+
+        //軸ヘルパー
+        const axesHelper = new THREE.AxesHelper(2);
+        scene.add(axesHelper);
+
+        //Stats
+        const stats = new Stats();
+        stats.showPanel(0);
+        document.body.appendChild(stats.dom);
+
+        //テクスチャの読み込み
+        const texture = new THREE.TextureLoader().load("./textures/8.png");
+
+        //GUI
+        const gui = new GUI();
+
+        //オブジェクト
+        const sphere = new THREE.Points(
+            new THREE.SphereGeometry(1, 20, 32),
+            new THREE.PointsMaterial({
+                size: 0.1,
+                color: 0xff0f0f,
+            })
+        );
+        scene.add(sphere);
+
+        //パーティクル
+        const bufferGeometry = new THREE.BufferGeometry();
+        const count = 5000;
+        const vertices = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
+
+        //for文でランダムな値を代入
+        for (let i = 0; i < count * 3; i++) {
+            vertices[i] = (Math.random() - 0.5) * 10;
+            colors[i] = Math.random();
+        }
+        console.log(vertices);
+
+
+        //ジオメトリに組み込む
+        bufferGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        bufferGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        //メッシュ化
+        const pointsMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            sizeAttenuation: true,
+            vertexColors: true,
+            alphaMap: texture,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+        });
+
+
+        //パーティクル
+        const particles = new THREE.Points(
+            bufferGeometry,
+            pointsMaterial
+        );
+        scene.add(particles);
+
+        gui.add(pointsMaterial, 'size', 0.1, 0.5).name('パーティクルサイズ').step(0.01);
+        gui.addColor(pointsMaterial, 'color').name('パーティクルカラー');
+
+        //レンダラー
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        renderer.render(scene, camera);
+
+        //マウスコントロール
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+
+        //更新
+        const update = () => {
+            stats.begin();
+            renderer.render(scene, camera);
+            controls.update();
+            stats.end();
+            window.requestAnimationFrame(update);
+        };
+
+        update();
+
+        //ウィンドウリサイズ
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+
+</html>
