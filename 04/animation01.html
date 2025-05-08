@@ -116,7 +116,7 @@
         const update = () => {
             stats.begin();
 
-            const elapsedTime = clock.getElapsedTime();
+            const elapsedTime = clock.getElapsedTime() * 0.5;
             console.log(Math.sin(elapsedTime));
 
             //座標の設定
@@ -124,8 +124,11 @@
                 const i3 = i * 3;
                 const x = bufferGeometry.attributes.position.array[i3];
                 const y = bufferGeometry.attributes.position.array[i3 + 1];
+                const z = bufferGeometry.attributes.position.array[i3 + 2];
                 bufferGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x) * 2;
                 bufferGeometry.attributes.position.array[i3 - 1] = Math.tan(elapsedTime + y) * 3;
+                bufferGeometry.attributes.position.array[i3 + 5] = Math.tan(elapsedTime + z) * 1.5;
+
             }
 
             bufferGeometry.attributes.position.needsUpdate = true;
