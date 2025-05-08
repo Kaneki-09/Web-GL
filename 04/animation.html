@@ -122,8 +122,8 @@
             for (let i = 0; i < count; i++) {
                 const i3 = i * 3;
                 const x = bufferGeometry.attributes.position.array[i3];
-                bufferGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x);
-                bufferGeometry.attributes.position.array[i3 - 1] = Math.tan(elapsedTime + x);
+                bufferGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x) * 2;
+                bufferGeometry.attributes.position.array[i3 - 1] = Math.tan(elapsedTime + x) * 1.5;
             }
 
             bufferGeometry.attributes.position.needsUpdate = true;
