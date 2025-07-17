@@ -5,12 +5,14 @@ import GUI from 'lil-gui';
 import Stats from 'stats-js';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { SplitText } from "gsap/SplitText";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 //GSAP
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother,SplitText);
 
 //UIデバッグ
 const gui = new GUI();
@@ -49,14 +51,14 @@ const group = new THREE.Group();
 let material = null;
 let textGeometry = null;
 
-const getText =(font) => {
+const getText = (font) => {
   let text = "TRIDENT WEBDESIGN CONFERENCE 2025";
 
   material = new THREE.MeshStandardMaterial({ color: 0x000000 });
   textGeometry = new TextGeometry(text, {
     font: font,
-    size: 0.5,
-    color:0xf0f0f0,
+    size: 0.4,
+    color: 0xf0f0f0,
     depth: 0.01,
     bevelEnabled: true,
     bevelThickness: 0.01,
@@ -69,10 +71,30 @@ const getText =(font) => {
 
   text = new THREE.Mesh(textGeometry, material);
   group.add(text);
+  gsap.from(text.scale, {
+    x: 0,
+    y: 0,
+    z: 0,
+    duration: 1.5,
+    ease: "back.out(1.7)"
+  });
+
+  gsap.to(group.position, {
+    y: 0.3,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
 
   gsap.timeline({
+    scrollSmoother: {
+      smooth: 1,
+      effects: true,
+      normalizeScroll: true,
+    },
     scrollTrigger: {
-      trigger: '#top',
+      trigger: '#concept',
       start: "center top",
       end: "bottom center",
       toggleActions: "play none none reverse",
@@ -81,7 +103,7 @@ const getText =(font) => {
     }
   })
     .to(text.position, { z: -10 });
-}
+};
 
 const fontLoader = new FontLoader();
 fontLoader.load('/font/Eagle Lake_Regular.json', (font) => {

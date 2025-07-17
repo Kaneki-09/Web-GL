@@ -18,6 +18,40 @@ canvas {
 }
 
 #top .inner{
-  width:100%;
+  width: 100%;
   margin-left:300px;
+}
+
+#top{
+  background: #dddcde;
+}
+
+#top .title{
+  margin-bottom:10px;
+  font-size:36px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color:#9E1392;
+}
+
+#top p{
+  margin-bottom:10px;
+font-size:20px;
+}
+
+#top a{
+  margin:10px;
+  padding:10px;
+  display:block;
+  width:15%;
+  font-size:16px;
+  font-family: 'Courier New', Courier, monospace;
+  color:#ffffff;
+  background:linear-gradient(#8F42A8,#0540BE);
+  text-align: center;
+  border-radius:8px;
+}
+
+#top a:hover{
+  background:linear-gradient(#0044D0,#9E1392);
 }
